@@ -1,0 +1,43 @@
+let cart = [];
+
+function addToCart(name, price) {
+let existingItem = cart.find(item => item.name === name);
+
+if (existingItem) {
+existingItem.quantity++;
+} else {
+cart.push({
+name: name,
+price: price,
+quantity: 1
+});
+}
+
+displayCart();
+function removeFromCart(name) {
+cart = cart.filter(item => item.name !== name);
+displayCart();
+}
+}
+
+function displayCart() {
+let cartItems = document.getElementById("cart-items");
+let cartTotal = document.getElementById("cart-total");
+
+let total = 0;
+cartItems.innerHTML = "";
+
+cart.forEach(function(item) {
+
+cartItems.innerHTML += `
+<p>
+  ${item.name} - ₦${item.price} × ${item.quantity}
+  <button onclick="removeFromCart('${item.name}')">Remove</button>
+</p>
+`;
+
+total += item.price * item.quantity;
+});
+
+cartTotal.textContent = total;
+}
